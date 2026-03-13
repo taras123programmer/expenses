@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Історія витрат</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f5f7fa;
+        }
+
+        header {
+            background: #1e293b;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+
+    /* FILTERS */
+
+
+/* FILTERS */
+
+.filters {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.filter-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 15px;
+}
+
+.filter-group label {
+    font-weight: 600;
+}
+
+select {
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    font-size: 15px;
+    min-width: 180px;
+}
+
+/* DROPDOWN */
+
+.dropdown {
+    position: relative;
+    min-width: 220px;
+}
+
+.dropdown-button {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    background: white;
+    cursor: pointer;
+    text-align: left;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 38px;
+    width: 100%;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+    padding: 10px;
+    z-index: 10;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.dropdown.open .dropdown-content {
+    display: block;
+}
+
+.dropdown-content label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 2px;
+    font-size: 14px;
+}
+
+.filters button {
+    align-self: flex-start;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 6px;
+    background: #2563eb;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+
+        /* TRANSACTION LIST */
+
+        .transaction-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .transaction-card {
+            background: white;
+            border-radius: 10px;
+            padding: 18px 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .transaction-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+
+        .transaction-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .transaction-category {
+            font-weight: 600;
+        }
+
+        .transaction-comment {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .transaction-date {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .transaction-amount {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ef4444;
+        }
+
+        /* PAGINATION */
+
+        .pagination {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .pagination a {
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            background: #2563eb;
+            color: white;
+            font-size: 14px;
+        }
+
+        .pagination a.secondary {
+            background: #64748b;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Історія витрат</h1>
+
+    <nav>
+        <a href="/">Dashboard</a>
+        <a href="/expenses/add">Додати витрату</a>
+    </nav>
+</header>
+
+<main>
+
+    <h2>Останні витрати</h2>
+
+    <form method="get">
+
+        <div class="filters">
+
+            <div class="filter-row">
+
+                <div class="filter-group">
+                    <label>Сортування</label>
+                    <select name="sort">
+                        <option value="date" <#if sort?? && sort == "date">selected</#if>>Дата</option>
+                    <option value="amount" <#if sort?? && sort == "amount">selected</#if>>Сума</option>
+                <option value="category" <#if sort?? && sort == "category">selected</#if>>Категорія</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label>Категорії</label>
+            <div class="dropdown" id="categoryDropdown">
+
+                <div class="dropdown-button" onclick="toggleDropdown()" id="categoryLabel">
+                    <#if checked_categories??>
+                    ${checked_categories?join(", ")}
+                    <#else>
+                    Вибрати категорії
+                </#if>
+            </div>
+
+            <div class="dropdown-content">
+                <#list categories as category>
+                <label>
+                    <input type="checkbox"
+                           name="categories"
+                           value="${category.id()}"
+                           data-name="${category.name()}"
+                           onchange="updateCategoryLabel()"
+                    <#if checked_categories?? && (category.name()?? && checked_categories?seq_contains(category.id()))>checked</#if>>
+                ${category.name()}
+                </label>
+            </#list>
+        </div>
+
+        </div>
+        </div>
+        </div>
+
+        <button type="submit">
+            Застосувати
+        </button>
+
+        </div>
+        </div>
+
+    </form>
+
+
+    <div class="transaction-list">
+
+        <#list expenses as e>
+
+        <div class="transaction-card">
+
+            <div class="transaction-info">
+
+                <div class="transaction-category">
+                    ${e.category}
+                </div>
+
+                <div class="transaction-comment">
+                    ${e.comment!""}
+                </div>
+
+                <div class="transaction-date">
+                    ${e.date}
+                </div>
+
+            </div>
+
+            <div class="transaction-amount">
+                -${e.amount} грн
+            </div>
+
+        </div>
+
+    </#list>
+
+    </div>
+
+
+    <div class="pagination">
+
+        <#if page != 0>
+        <a class="secondary" href="?page=${page-1}<#if sort??>&sort=${sort}</#if><#if checked_categories??><#list checked_categories as category>&categories=${category}</#list></#if>">
+            Попередня
+        </a>
+    </#if>
+
+
+    <#if !is_last>
+    <a href="?page=${page+1}<#if sort??>&sort=${sort}</#if><#if checked_categories??><#list checked_categories as category>&categories=${category}</#list></#if>">
+        Наступна
+    </a>
+</#if>
+
+</div>
+
+</main>
+
+<script>
+
+    function toggleDropdown() {
+        document
+            .getElementById("categoryDropdown")
+            .classList.toggle("open");
+    }
+
+    function updateCategoryLabel() {
+
+    const checkboxes =
+        document.querySelectorAll(
+            '#categoryDropdown input[type="checkbox"]:checked'
+        );
+
+    const names = [];
+
+    checkboxes.forEach(cb => {
+        names.push(cb.dataset.name);
+    });
+
+    const MAX = 3;
+    let text = "Вибрати категорії";
+
+    if (names.length > 0) {
+
+        const visible = names.slice(0, MAX);
+
+        text = visible.join(", ");
+
+        if (names.length > MAX) {
+            text += ", ...";
+        }
+
+    }
+
+    document.getElementById("categoryLabel").innerText = text;
+    }
+
+    document.addEventListener("click", function(event) {
+
+    const dropdown = document.getElementById("categoryDropdown");
+
+    if (!dropdown.contains(event.target)) {
+        dropdown.classList.remove("open");
+    }
+
+});
+
+  updateCategoryLabel();
+
+</script>
+
+</body>
+</html>

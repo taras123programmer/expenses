@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Finance App — Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css">
+
+</head>
+<body>
+
+
+
+<header>
+    <h1>Finance Dashboard</h1>
+    <nav>
+        <a href="/expense/">Витрати</a>
+        <a href="/income/">Доходи</a>
+        <a href="/income/">Регулярні</a>
+        <a href="/analytics/">Аналітика</a>
+        <form method="post" action="/logout" class="logout">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+            <button type="submit">Вийти</button>
+        </form>
+    </nav>
+</header>
+
+<main class="dashboard-main">
+
+    <!-- Budget overview -->
+    <div class="budget-card">
+        <div class="budget-header">
+            <div class="budget-amount">
+                <p>Запланований ліміт: ${budget.planned_limit()}</p>
+                <p>Сумарний дохід: ${budget.total()} </p>
+            </div>
+
+            <a class="button secondary">
+                Встановити / змінити ліміт
+            </a>
+        </div>
+
+        <div class="budget-bar">
+            <div class="budget-bar-used"></div>
+            <div class="budget-bar-over"></div>
+        </div>
+
+        <div class="budget-info">
+            <span>Витрачено: ₴ ${budget.spent()}</span>
+            <span>Доступно: ₴ ${budget.free()}</span>
+        </div>
+
+        <div class="actions">
+            <a class="button" href="/expense/new/">Додати витрату</a>
+            <a class="button" href="/income/new/">Внести дохід</a>
+            <a class="button" href="/expense/">Переглянути історію витрат</a>
+            <a class="button" href="/income/">Переглянути джерела доходів</a>
+            <a class="button" href="/expense/new/?regular=true">Додати регулярний платіж</a>
+        </div>
+    </div>
+
+    <!-- Bottom content -->
+    <div class="content-grid">
+
+        <!-- Chart -->
+        <section>
+            <h2>Аналітика витрат по категоріях</h2>
+            <div class="chart-placeholder">
+                Діаграма по категоріях
+            </div>
+        </section>
+
+        <!-- Navigation / shortcuts -->
+        <section>
+<!--            <h2>Швидкі переходи</h2>-->
+<!--            <div class="quick-links">-->
+<!--                <a href="expenses.html">Усі витрати</a>-->
+<!--                <a href="income.html">Доходи</a>-->
+<!--                <a href="recurring.html">Регулярні платежі</a>-->
+<!--                <a href="analytics.html">Детальна аналітика</a>-->
+<!--            </div>-->
+        </section>
+
+    </div>
+
+</main>
+
+<script>
+    const limit = parseFloat("${budget.total()}".replace(/\s/g, ''));
+    const spent = parseFloat("${budget.spent()}".replace(/\s/g, ''));
+
+    const usedBar = document.querySelector('.budget-bar-used');
+    const overBar = document.querySelector('.budget-bar-over');
+
+    if (spent <= limit) {
+
+    const percent = (spent / limit) * 100;
+    usedBar.style.width = percent + "%";
+    overBar.style.width = "0%";
+
+    } else {
+
+        const limitPercent = (limit / spent) * 100;
+        const overPercent = 100 - limitPercent;
+
+        usedBar.style.width = limitPercent + "%";
+        overBar.style.width = overPercent + "%";
+    }
+</script>
+
+</body>
+
+
+</html>

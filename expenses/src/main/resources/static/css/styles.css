@@ -1,0 +1,213 @@
+/* ===== GLOBAL ===== */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f5f7fa;
+}
+
+header {
+    background: #1e293b;
+    color: white;
+    padding: 15px 30px;
+}
+
+/* dashboard header */
+header.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+/* ===== BUTTONS ===== */
+
+button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #2563eb;
+    color: white;
+}
+
+.button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+}
+
+.secondary {
+    background: #64748b;
+}
+
+.button.secondary {
+    background: #64748b;
+}
+
+/* ===== FORM PAGES ===== */
+
+main.form-layout {
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+main.form-layout-narrow {
+    max-width: 600px;
+    margin: 40px auto;
+}
+
+.form-card {
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 400px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    font-size: 14px;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ===== DASHBOARD ===== */
+
+main.dashboard-main {
+    padding: 30px;
+}
+
+.budget-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.budget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.budget-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.actions {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* ===== BUDGET BAR ===== */
+
+.budget-bar {
+    display: flex;
+    height: 20px;
+    background: #e2e8f0;
+    border-radius: 10px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+.budget-bar-used {
+    height: 100%;
+    background: #ef4444;
+    width: 0%;
+    transition: width 0.4s ease;
+}
+
+.budget-bar-over {
+    height: 100%;
+    background: #7c3aed;
+    width: 0%;
+    transition: width 0.4s ease;
+}
+
+/* ===== DASHBOARD GRID ===== */
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+section {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.chart-placeholder {
+    height: 200px;
+    background: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+}
+
+.quick-links a {
+    display: block;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #2563eb;
+}
+
+.logout{
+display: inline-block;
+  margin-left: 10px;
+  }
+
+.checkbox-group input{
+    width: 20px;
+}

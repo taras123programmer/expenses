@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Реєстрація</title>
+
+    <style>
+
+        body{
+            font-family: Arial, sans-serif;
+            margin:0;
+            background:#f5f7fa;
+        }
+
+        header{
+            background:#1e293b;
+            color:white;
+            padding:15px 30px;
+        }
+
+        main{
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            height:80vh;
+        }
+
+        .register-card{
+            background:white;
+            padding:30px;
+            border-radius:10px;
+            width:350px;
+            box-shadow:0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        h2{
+            margin-top:0;
+            margin-bottom:25px;
+            text-align:center;
+        }
+
+        .form-group{
+            margin-bottom:18px;
+        }
+
+        label{
+            display:block;
+            margin-bottom:6px;
+            font-weight:600;
+        }
+
+        input{
+            width:100%;
+            padding:10px;
+            border-radius:6px;
+            border:1px solid #cbd5e1;
+            font-size:14px;
+        }
+
+        button{
+            width:100%;
+            padding:10px;
+            border:none;
+            border-radius:6px;
+            background:#16a34a;
+            color:white;
+            font-size:15px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#15803d;
+        }
+
+        .login-link{
+            margin-top:15px;
+            text-align:center;
+            font-size:14px;
+        }
+
+        .login-link a{
+            color:#2563eb;
+            text-decoration:none;
+        }
+
+        .error{
+            background:#fee2e2;
+            color:#b91c1c;
+            padding:10px;
+            border-radius:6px;
+            margin-bottom:15px;
+            font-size:14px;
+            text-align:center;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Expense Tracker</h1>
+</header>
+
+<main>
+
+    <div class="register-card">
+
+        <h2>Реєстрація</h2>
+
+        <#if error??>
+        <div class="error">
+            ${error}
+        </div>
+    </#if>
+
+    <form method="post" action="/register">
+
+        <div class="form-group">
+            <label>Ім'я користувача</label>
+            <input type="text" name="username" required>
+        </div>
+
+        <div class="form-group">
+            <label>Пароль</label>
+            <input type="password" name="password" required>
+        </div>
+        <div class="form-group">
+            <label>Підтвердити пароль</label>
+            <input type="password" name="confirm_password" required>
+        </div>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+
+        <button type="submit">Зареєструватися</button>
+
+    </form>
+
+    <div class="login-link">
+        Вже маєте акаунт?
+        <a href="/login">Увійти</a>
+    </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>
