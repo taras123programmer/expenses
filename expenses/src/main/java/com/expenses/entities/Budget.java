@@ -39,11 +39,11 @@ public class Budget {
 
     public Budget(){}
 
-    public Budget(int userId, int month, int year, float plannedLimit){
+    public Budget(int userId, int month, int year, BigDecimal plannedLimit){
         this.userId = userId;
         this.month = (byte) month;
         this.year = (short) year;
-        this.plannedLimit = new BigDecimal(plannedLimit);
+        this.plannedLimit = plannedLimit;
         this.closed = false;
     }
 
@@ -78,6 +78,13 @@ public class Budget {
     }
 
     public void setPlannedLimit(BigDecimal plannedLimit) {
+    }
+
+    public BigDecimal getRemaining() {
+        return remaining;
+    }
+
+    public void setRemaining(BigDecimal remaining) {
     }
 
     public Boolean getClosed() {

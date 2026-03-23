@@ -12,10 +12,16 @@
 
 <header>
     <h1>Finance Dashboard</h1>
+
+    <div class="balance-info">
+        <span>Загальний баланс: </span>
+        <span id="balance-value" class="<#if balance gt 0>balance-positive</#if><#if balance lt 0>balance-negative</#if>">${balance} грн</span>
+    </div>
+
     <nav>
         <a href="/expense/">Витрати</a>
         <a href="/income/">Доходи</a>
-        <a href="/income/">Регулярні</a>
+        <a href="/expense/regular/">Регулярні</a>
         <a href="/analytics/">Аналітика</a>
         <form method="post" action="/logout" class="logout">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
@@ -64,8 +70,7 @@
         <!-- Chart -->
         <section>
             <h2>Аналітика витрат по категоріях</h2>
-            <div class="chart-placeholder">
-                Діаграма по категоріях
+            <div class="chart-placeholder" style="background-image: url('/chart'); background-repeat: no-repeat; background-size: cover;">
             </div>
         </section>
 

@@ -30,6 +30,9 @@ dependencies {
 	//implementation 'org.flywaydb:flyway-mysql'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+	implementation 'org.jfree:jfreechart:1.5.4'
+	implementation 'org.jfree:jfreechart:1.5.4'
+
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
 	//testImplementation 'org.springframework.boot:spring-boot-starter-flyway-test'

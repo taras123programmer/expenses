@@ -1,5 +1,6 @@
 package com.expenses.entities;
 
+import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,12 +14,14 @@ public class UserDetailsImpl  implements UserDetails {
     private final String username;
     private final String password;
     private final String role;
+    private final float balance;
 
-    public UserDetailsImpl(Integer id, String username, String password, String role) {
+    public UserDetailsImpl(Integer id, String username, String password, String role, float balance) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.role = role;
+        this.balance = balance;
     }
 
     public Integer getId() {
@@ -33,6 +36,10 @@ public class UserDetailsImpl  implements UserDetails {
     @Override
     public String getPassword() {
         return password;
+    }
+
+    public float getBalance() {
+        return balance;
     }
 
     @Override

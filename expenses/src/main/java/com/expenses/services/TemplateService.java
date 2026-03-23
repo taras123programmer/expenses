@@ -2,20 +2,26 @@ package com.expenses.services;
 
 import com.expenses.DTOs.TemplateDTO;
 import com.expenses.entities.Template;
+import com.expenses.entities.TransactionEntity;
 import com.expenses.entities.TransactionType;
 import com.expenses.repositories.TemplateRepository;
+import com.expenses.repositories.TransactionRepository;
 import jakarta.transaction.Transaction;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class TemplateService {
 
     final private TemplateRepository templateRepository;
+    final private TransactionRepository transactionRepository;
 
-    public TemplateService(TemplateRepository templateRepository) {
+    public TemplateService(TemplateRepository templateRepository, TransactionRepository transactionRepository) {
         this.templateRepository = templateRepository;
+        this.transactionRepository = transactionRepository;
     }
 
     public void createTemplate(TemplateDTO templateDTO){
@@ -29,9 +35,19 @@ public class TemplateService {
                                 template.getUserId(),
                                 template.getType(),
                                 template.getCategoryId(),
+                                template.getCategory().getName(),
                                 template.getAmount(),
                                 template.getRegular()
                 )).toList();
+    }
+
+    @Transactional
+    public TransactionEntity applyTemplate(Template template, int budgetId){
+        TransactionEntity transaction = new TransactionEntity(template.getUserId(), budgetId, template.getType(),
+                LocalDate.now(),template.getCategoryId(), template.getAmount(), template.getCategory().getName());
+
+        transactionRepository.save(transaction);
+        return transaction;
     }
 
 

@@ -1,12 +1,12 @@
 package com.expenses.controllers;
 
-import com.expenses.DTOs.CategoryDTO;
-import com.expenses.DTOs.TransactionPageDTO;
-import com.expenses.DTOs.TransactionRequestDTO;
+import com.expenses.DTOs.*;
+import com.expenses.entities.Template;
 import com.expenses.entities.TransactionType;
 import com.expenses.entities.UserDetailsImpl;
 import com.expenses.services.BudgetService;
 import com.expenses.services.CategoryService;
+import com.expenses.services.TemplateService;
 import com.expenses.services.TransactionService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,11 +28,14 @@ public class ExpenseController {
     final private BudgetService budgetService;
     final private CategoryService categoryService;
     final private TransactionService transactionService;
+    final private TemplateService templateService;
 
-    public ExpenseController(BudgetService budgetService, CategoryService categoryService, TransactionService transactionService) {
+    public ExpenseController(BudgetService budgetService, CategoryService categoryService,
+                             TransactionService transactionService, TemplateService templateService) {
         this.budgetService = budgetService;
         this.categoryService = categoryService;
         this.transactionService = transactionService;
+        this.templateService = templateService;
     }
 
     @GetMapping("/new/")
@@ -88,6 +91,16 @@ public class ExpenseController {
         }
 
         return "expenses";
+    }
+
+    @GetMapping("/regular/")
+    public String RegularExpenseList(@AuthenticationPrincipal UserDetailsImpl user,
+                             Model model){
+
+        List<TemplateDTO> expenses = templateService.getTemplateList(user.getId(), TransactionType.expense);
+        model.addAttribute("expenses", expenses);
+
+        return "regular_expenses";
     }
 
 

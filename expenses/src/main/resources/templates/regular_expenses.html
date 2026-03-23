@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Витрати</title>
+
+    ```
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f5f7fa;
+        }
+
+        header {
+            background: #1e293b;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            margin-left: 20px;
+            text-decoration: none;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .add-button {
+            display: inline-block;
+            margin-bottom: 25px;
+            padding: 8px 16px;
+            background: #ef4444;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .transaction-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .transaction-card {
+            background: white;
+            border-radius: 10px;
+            padding: 18px 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .transaction-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+        }
+
+        .transaction-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .transaction-category {
+            font-weight: 600;
+        }
+
+        .transaction-comment {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .transaction-date {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .transaction-amount {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ef4444;
+        }
+
+    </style>
+    ```
+
+</head>
+
+<body>
+
+<header>
+
+    ```
+    <h1>Регулярні витрати</h1>
+
+    <nav>
+        <a href="/">Dashboard</a>
+        <a href="/income/">Доходи</a>
+        <a href="/expense/new/">Додати витрату</a>
+    </nav>
+    ```
+
+</header>
+
+<main>
+
+    ```
+    <h2>Витрати</h2>
+
+    <a class="add-button" href="/expense/new/">
+        + Додати витрату
+    </a>
+
+
+    <div class="transaction-list">
+
+        <#list expenses as expense>
+
+        <div class="transaction-card">
+
+            <div class="transaction-info">
+
+                <div class="transaction-category">
+                    ${expense.category()}
+                </div>
+
+            </div>
+
+            <div class="transaction-amount">
+                -${expense.amount()} грн
+            </div>
+
+        </div>
+
+    </#list>
+
+    </div>
+
+</main>
+
+</body>
+</html>

@@ -9,6 +9,7 @@ public record TemplateDTO(
         int userId,
         TransactionType type,
         int categoryId,
+        String category,
         BigDecimal amount,
         boolean regular
 ) {}

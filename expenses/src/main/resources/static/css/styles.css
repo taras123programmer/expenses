@@ -12,11 +12,29 @@ header {
     padding: 15px 30px;
 }
 
-/* dashboard header */
+
 header.dashboard-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
+}
+
+
+.balance-info {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.balance-positive {
+    color: #22c55e;
+}
+
+.balance-negative {
+    color: #ef4444;
 }
 
 nav a {
@@ -188,7 +206,7 @@ section {
 }
 
 .chart-placeholder {
-    height: 200px;
+    height: 650px;
     background: #e2e8f0;
     display: flex;
     align-items: center;
